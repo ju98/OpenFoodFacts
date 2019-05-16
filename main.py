@@ -24,4 +24,7 @@ if __name__ == "__main__" :
     allergens = allergens.split(",")
     
     print("\n\nvoici tous nos produits que vous pouvez consommer : \n")
-    print(OpenFoodFacts.productsOk(allergens))
+    products = OpenFoodFacts.productsOk(allergens)
+    for p in products:
+        if str(p[0]) != "nan" :
+            print("\t",p[0])
