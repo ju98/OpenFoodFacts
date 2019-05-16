@@ -22,7 +22,7 @@ class OFF:
             print(x, "\n")
 
 
-    def afficheColonne(self, nom):
+    def getColonne(self, nom):
         '''
             Retourne la colonne intitulée nom
         '''
@@ -52,8 +52,39 @@ class OFF:
                 products.append([x.product_name, x.ingredients_text])
                 
         return products
+    
+    
+    def getAllergenes(self):
+        allergens = []
+        
+        for x in self.df.itertuples():
+            if str(x.allergens) != "nan" :
+                a = str(x.allergens).split(',') #lorsqu'il y a plusieurs allergenes, ils sont separes par des ",". On recupere donc chaque allergene
+                for i in a:
+                    if i != "," :
+                        allergens.append(i)
+        
+        al = self.supprimeDoublons(allergens)
+        return al
 
 
+
+    def supprimeDoublons(self, L):
+        '''
+            L est une liste de String
+        '''
+        listeOK = []
+        
+        for elem in L:
+            i=0
+            for j in listeOK:
+                if elem == j:
+                    i+=1
+            
+            if i==0:
+                listeOK.append(elem)
+        
+        return listeOK
 
     
 
@@ -62,12 +93,14 @@ class OFF:
 # =============================================================================
 if __name__ == "__main__" :
     
-    df = pandas.read_csv('produit_pour_le_client_detail.csv', sep = ";", nrows = 100)
+    df = pandas.read_csv('produit_pour_le_client_detail.csv', sep = ";", nrows = 500)
     
     OpenFoodFacts = OFF(df)
     
     #OpenFoodFacts.afficheNomColonnes()
     
-    #print(OpenFoodFacts.afficheColonne("product_name"))
+    #print(OpenFoodFacts.getColonne("product_name"))
     
-    print(OpenFoodFacts.productsOk(['rice']))  
+    #print(OpenFoodFacts.productsOk(['rice']))  
+    
+    #print(OpenFoodFacts.getAllergenes())
