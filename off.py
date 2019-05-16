@@ -45,7 +45,7 @@ class OFF:
             
             for a in allergens: #pour tous les allergenes rentres :
                 for c in colonnes_a_verifier: #on parcourre toutes les colonnes ou on doit verifier qui'il n'y a pas d'allergene
-                    if a in str(c):
+                    if a in str(c).lower(): #on comparre a une string convertie en minuscules
                         i+=1
             
             if i==0: #aucune des conditions precedente a ete verifiee
